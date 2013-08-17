@@ -1,10 +1,4 @@
 ﻿
-///////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-////////////////////CAMPION/////////////////////////////////
-///////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 
 var CP, campion;
@@ -51,16 +45,12 @@ var CP, campion;
             '=': function () { },
             '!=': function (a, b) {
 
-
-             console.log("a and a not".domain.toString(), a.domain.not().toString());
-              
-                
-                
-                if (!_self.narrow(a, b.domain.not())) {
+                console.log("a, b", a, b);
+                //if (!_self.narrow(a, b.domain.not())) {
                     
-                    return false;
-                };
-                if (!_self.narrow(b, a.domain.not())) {
+                  //  return false;
+                //};
+                if (!_self.narrow(b, a.domain.copy().not())) {
                     return false;
                 };
                 return true;
@@ -107,7 +97,7 @@ var CP, campion;
 
 
         this.solveOne = function () {
-
+            console.log("ENTER SOLVE ONE");
 
            
             if (this.isFixedPoint(this.variables)) {
@@ -136,17 +126,17 @@ var CP, campion;
                         
                          if (!this.narrow(v, newArr)) {
                              console.log('returned false');
-                            return;
+                            return false;
                         } //return codes for back jumping
                        
                         if (!this.solveOne()) {
-                           return;
+                           return false;
                         }; //return codes for back jumping
                        
                         while (this.undoStack.length() != frame) {
                             var pair = undoStack.pop();
-                            
-                            pair.variable.domain = pair.values;
+                            console.log("pair.values", pair.values);
+                            pair.variable.domain = pair.values.copy();
                         }
                         this.undoStack.currentFrame = frame;
 
@@ -158,9 +148,11 @@ var CP, campion;
         };
 
         this.narrow = function (v, set) {
+            console.log("ENTER NARROW with v of", v);
             console.log("Narrowed from:",v.domain.toString());
             var newSet = v.domain.and(set);
-            console.log("Narrowed to:",newSet.toString());
+            console.log("Narrowed to:", newSet.toString());
+            
            
             if (newSet.count() === 0) {
                 console.log("FAIL!!!");
@@ -179,27 +171,36 @@ var CP, campion;
                     this.undoStack.push(v, v.domain);
                     v.lastFrame = this.undoStack.currentFrame;
                 }
-                v.domain = newSet;
+                v.domain = newSet.copy();
+                console.log("yup");
                 
-                for (var c in v.constraints) {
-
-                    if (!this.propagate(v.constraints[c], v)) {
-                        return false;
-                    }
-                }
                
 
+            }
+            
+            for (var c in v.constraints) {
+
+                if (!this.propagate(v.constraints[c], v)) {
+                    return false;
+                }
             }
             
             return true;
         };
 
-        this.propagate = function (constraint, variable) {
-           
-            if (!constraint.OP.apply(null, constraint.variables)) {
-               
-                return false;
-            };//return code;
+        this.propagate = function(constraint, variable) {
+            console.log("ENTER PROPAGATE");
+            if (constraint.variables[1] != variable && constraint.variables[1] != undefined) {
+
+                if (!constraint.OP.apply(null, constraint.variables)) {
+
+                    return false;
+                }
+            }
+            console.log("returning true")
+            return true;
+
+            //return code;
 
         };
 
@@ -283,7 +284,7 @@ var CP, campion;
             for (var i = 0; i <= length; i++) {
                 this.variables[varName + i] = {
                     name: varName + i,
-                    domain: domainSet,
+                    domain: domainSet.copy(),
                     constraints: [],
                     lastFrame: 0
                 };
@@ -340,7 +341,17 @@ var CP, campion;
         buildConstraint: function () {
             
         return new ConstraintBuilder(this);
-    }
+        },
+        
+        getVariable: function(name) {
+            return this.variables[name];
+
+        },
+        
+        addMatrix: function() {
+            
+
+        }
 
 
     };
@@ -348,13 +359,16 @@ var CP, campion;
 }());
 
 
-
 var blah = CP("pairwiseDifference")
-    .addVars("Q", 3, [0, 10])
+    .addVars("Q", 20, [0, 1])
     .buildConstraint()
-        .forAll("Q") //Allows cp to know this is an array.
-        .suchThat("Q[i]")
-        .notEqual()
-        .to("Q[i + 1]");
+    .forAll("Q") //Allows cp to know this is an array.
+    .suchThat("Q[i]")
+    .notEqual()
+    .to("Q[i + 1]")
+    .addConstraint("Q1 != Q3");
+ 
 
 blah.solve();
+
+
