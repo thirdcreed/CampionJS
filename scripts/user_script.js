@@ -45,14 +45,24 @@ var CP, campion;
             '=': function () { },
             '!=': function (a, b) {
 
-                console.log("a, b", a, b);
-                //if (!_self.narrow(a, b.domain.not())) {
+
+
+                console.log("a, b", a.domain.toString(), b.domain.toString());
+                if (b.domain.count() == 1) {
+                    if (!_self.narrow(a, b.domain.copy().not())) {
+
+                        return false;
+                    }
                     
-                  //  return false;
-                //};
-                if (!_self.narrow(b, a.domain.copy().not())) {
-                    return false;
-                };
+                }
+
+
+                if (a.domain.count() == 1) {
+                    if (!_self.narrow(b, a.domain.copy().not())) {
+                        return false;
+                    }
+                    
+                }
                 return true;
             },
             '<=': function () { },
@@ -86,7 +96,7 @@ var CP, campion;
 
             for (var v in sysVariables) {
                 
-                if (v != 'lastFrame' && this.variables[v].domain.count() > 1) {
+                if (v != 'lastFrame' && this.variables[v].domain.count() != 1) {
                     return false;
                 }
             }
@@ -102,16 +112,17 @@ var CP, campion;
            
             if (this.isFixedPoint(this.variables)) {
 
-               for (v in this.variables) {
+               for (var v in this.variables) {
                    console.log("VAR:",v,"VALUE:",this.variables[v].domain.toString());
 
                }
                 return true;
             } else {
                 var frame = this.undoStack.length();
+                console.log("frame:",frame);
                 this.undoStack.currentFrame = frame;
 
-                var v = _.find(this.variables, function (variable) {
+                 v = _.find(this.variables, function (variable) {
                   
                     return variable.domain.count() > 1;
                 });
@@ -122,24 +133,29 @@ var CP, campion;
 
                         var newArr = new BitArray(v.domain.size());
                         newArr.set(i, true);
-                        
-                        
-                         if (!this.narrow(v, newArr)) {
-                             console.log('returned false');
-                            return false;
-                        } //return codes for back jumping
-                       
-                        if (!this.solveOne()) {
-                           return false;
-                        }; //return codes for back jumping
-                       
+
+
+                        if (!this.narrow(v, newArr)) {
+                            console.log('returned false');
+                            return
+
+                        } else {
+                            
+                            if (!this.solveOne()) {
+                                 return false;
+                            } //return codes for back jumping
+                        }
+
+                        //return codes for back jumping
+
+                        console.log("got to the undo stack with frame of:", frame, ",length of", this.undoStack.length(), "and currentFrame of", this.undoStack.currentFrame);
                         while (this.undoStack.length() != frame) {
-                            var pair = undoStack.pop();
-                            console.log("pair.values", pair.values);
+                            var pair = this.undoStack.pop();
+                            console.log("pair.variable pair.values", pair.variable,pair.values);
                             pair.variable.domain = pair.values.copy();
                         }
                         this.undoStack.currentFrame = frame;
-
+                        return true;
                     }
                 }
             }
@@ -150,40 +166,40 @@ var CP, campion;
         this.narrow = function (v, set) {
             console.log("ENTER NARROW with v of", v);
             console.log("Narrowed from:",v.domain.toString());
-            var newSet = v.domain.and(set);
+            var newSet = v.domain.copy().and(set);
             console.log("Narrowed to:", newSet.toString());
             
            
             if (newSet.count() === 0) {
                 console.log("FAIL!!!");
-                
-                
-                
+                //throw new Error("FAILURE!!!").stack;
                 return false;
             }
-           
+            console.log("!newSet.equals(v.domain)", !newSet.equals(v.domain));
             if (!newSet.equals(v.domain)) {
-               
-                
+
+                console.log("lastFrame", v.lastFrame, " == currentFrame", this.undoStack.currentFrame);
                 if (v.lastFrame == this.undoStack.currentFrame) {
+
+                    console.log("onPush", this.undoStack);
+                   
+                        this.undoStack.push( v, v.domain );
                     
-                    
-                    this.undoStack.push(v, v.domain);
                     v.lastFrame = this.undoStack.currentFrame;
                 }
                 v.domain = newSet.copy();
                 console.log("yup");
                 
-               
+                for (var c in v.constraints) {
+
+                    if (!this.propagate(v.constraints[c], v)) {
+                        return false;
+                    }
+                }
 
             }
             
-            for (var c in v.constraints) {
-
-                if (!this.propagate(v.constraints[c], v)) {
-                    return false;
-                }
-            }
+            
             
             return true;
         };
@@ -197,7 +213,7 @@ var CP, campion;
                     return false;
                 }
             }
-            console.log("returning true")
+            console.log("returning true");
             return true;
 
             //return code;
@@ -348,7 +364,7 @@ var CP, campion;
 
         },
         
-        addMatrix: function() {
+        addMatrix: function(name,i,j,dom) {
             
 
         }
@@ -360,15 +376,21 @@ var CP, campion;
 
 
 var blah = CP("pairwiseDifference")
-    .addVars("Q", 20, [0, 1])
+    .addVars("Q", 10, [0,10 ])
     .buildConstraint()
     .forAll("Q") //Allows cp to know this is an array.
     .suchThat("Q[i]")
     .notEqual()
     .to("Q[i + 1]")
-    .addConstraint("Q1 != Q3");
- 
+    .buildConstraint()
+    .forAll("Q") //Allows cp to know this is an array.
+    .suchThat("Q[i]")
+    .notEqual()
+    .to("Q[i + 2]")
+    .addVar("A", [1, 100]);
 
 blah.solve();
+
+
 
 
