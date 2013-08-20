@@ -1,0 +1,87 @@
+//
+// Variables
+// --------------------------------------------------
+// The order and names are from Bootstrap 3.2 The values are from Kracken.
+
+// Global values
+// --------------------------------------------------
+
+// Grays
+// -------------------------
+// From Bootstrap:
+$gray-darker: #222222; 
+$gray-dark:#333333; 
+$gray:#555555;
+$gray-light:#999999;
+$gray-lighter:#eeeeee; 
+
+// Brand Colors
+// -------------------------
+
+$brand-primary:#428bca;
+$brand-success: #5cb85c;
+$brand-warning:#f0ad4e;
+$brand-danger:#d9534f;
+$brand-info:#5bc0de;
+
+// Scaffolding
+// -------------------------
+
+$body-bg:#ffffff;
+$text-color: $gray-dark;
+$border-color:#cccccc;
+
+// Links
+// -------------------------
+
+$link-color:$brand-primary;
+$link-hover-color:  darken($link-color, 15%);
+
+// Typography
+// -------------------------
+
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: Georgia, "Times New Roman", Times, serif;
+$font-family-monospace: Monaco, Menlo, Consolas, "Courier New", monospace;
+$font-family-base: $font-family-sans-serif;
+
+$font-size-base: 106.25%;
+$font-size-large: $font-size-base * 1.25; // ~21px
+$font-size-small: $font-size-base * 0.85; // ~14px
+
+$line-height-base:        1.470588235; // 20/14
+$line-height-computed:    $font-size-base * $line-height-base; // ~20px
+
+$headings-font-family:    $font-family-base;
+$headings-font-weight:    500;
+$headings-line-height:    1.1;
+
+//Body Sizes
+//----------------------------
+// Kraken Default is 80em 
+
+$container-width: 80em;
+$container-max-width:80px;
+
+
+// Margin & Padding
+//----------------------------
+
+$spacing-massive: 3.529em; //~60px
+$spacing-large: 2.353em; //~40px
+$spacing-base: 1.176em; //~20px
+$spacing-small: 0.588em; //~10px
+$spacing-tiny: 0.294em; //~5px
+
+// Rounded Corners
+//----------------------------
+
+$rounded-all:0;
+
+
+
+
+
+
+
+

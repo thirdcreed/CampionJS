@@ -1,0 +1,277 @@
+/* =============================================================
+
+    Kraken v2.2
+    A lightweight front-end boilerplate by Chris Ferdinandi.
+    http://gomakethings.com
+
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+
+
+    COLORS
+    Primary (Blue): #0088cc
+    Secondary (Dark Blue): #005580
+    Black: #272727
+    White: #ffffff
+    Gray: #808080
+    Light Gray: #e5e5e5
+
+
+    FONT STACKS
+    Sans-Serif (default): "Helvetica Neue", Arial, sans-serif
+    Serif (suggested): Georgia, Times, serif
+    Add your own here...
+
+
+    TYPOGRAPHIC SCALE 
+    (For math purposes. Actual font sizes in ems.)
+    4px, 5px, 8px, 10px, 11px, 14px, 15px, 17px (base), 20px, 23px, 26px, 30px, 34px, 51px, 68px, 85px, 102px
+    
+    * ============================================================= */
+
+
+/* =============================================================
+    CSS RESET
+    Meyer's CSS Reset, Normalized.css, and custom code.
+    * ============================================================= */
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================================
+    ADD-ONS PLACEHOLDER
+    A placeholder for add-on styling.
+    Expand the functionality of Kraken.
+    http://cferdinandi.github.io/kraken/addons.html
+    * ============================================================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================================
+
+    Astro Navbar 3.2
+    Mobile-first navigation patterns by Chris Ferdinandi.
+    http://gomakethings.com
+
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+    
+    * ============================================================= */
+
+    /*  Center all navigation elements */
+    .nav-wrap {
+        text-align: center;
+    }
+
+/*  For text-based logo, override default link styling.
+ *  If .logo and .nav don't align properly,
+ *  adjust the .logo line-height. */
+ .logo {
+    display: inline-block;
+    font-size: 1.2em;
+    line-height: 1.2;
+    color: #272727;
+    margin-bottom: .470588235em;
+    text-decoration: none;
+}
+
+/*  For text-based logo, override default link hover styling */
+.logo:hover {
+    color: #272727;
+    text-decoration: none; 
+}
+
+/*  Remove default list styling for navigation list */
+.nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*  Display navigation items as inline-block elements.
+*  Add slight margin between each navigation item. */
+.nav > li {
+    display: inline-block;
+    float: none;
+    margin-left: .470588235em;
+    margin-right: .470588235em;
+}
+
+/*  Remove margin-left on first navigation item */
+.nav > li:first-child {
+    margin-left: 0;
+}
+
+/*  Remove margin-right on last navigation item */
+.nav > li:last-child {
+    margin-right: 0;
+}
+
+/*  Placeholder for active link styling */
+/*  .nav > li.active > a { */
+    /*      Add your styles here */
+    /*  } */
+
+/*  Hide the navigation toggle menu button by default.
+*  Only needed for expand-and-collapse option. */
+.nav-toggle {
+    display: none;
+    visibility: hidden;
+}
+
+
+/*  Styling for Bigger Screens.
+ *  (Astro is built mobile-first.)
+ *  Change min-width to fit your project. */
+ @media (min-width: 40em) {
+
+    /*  Align text to the left */
+    .nav-wrap {
+        text-align: left;
+    }
+
+    /*  Float logo to the left and remove margin-bottom */
+    .logo {
+        float: left;
+    }
+
+    /*  Align navigation elements to the right */
+    .nav {
+        text-align: right;
+    }
+}
+
+
+/*  Clearfix */
+
+.nav-wrap:before, .nav-wrap:after { 
+    display: table; 
+    content: ""; 
+    *zoom: 1; 
+}
+
+.nav-wrap:after { 
+    clear: both; 
+}
+
+
+/* =============================================================
+
+    Slider v3.0
+    A simple, responsive, touch-enabled image slider, forked from Swipe.
+
+    Script by Brad Birdsall.
+    http://swipejs.com/
+
+    Forked by Chris Ferdinandi.
+    http://gomakethings.com
+
+    Code contributed by Ron Ilan.
+    https://github.com/bradbirdsall/Swipe/pull/277
+
+    Licensed under the MIT license.
+    http://gomakethings.com/mit/
+    
+    * ============================================================= */
+
+    /*  When HTML5 JS features supported, hide slider */
+    .js .slider {
+        position: relative;
+        overflow: hidden;
+        visibility: hidden;
+    }
+
+    /*  When HTML5 JS features supported, hide slides */
+    .js .slides {
+        overflow: hidden;
+        position: relative;
+    }
+
+    /*  Add a margin-bottom to each slide */
+    .slides > div {
+        margin-bottom: .470588235em;
+    }
+
+/*  When HTML5 JS features supported, set width to 100%
+*  and float slides to the left. */
+.js .slides > div {
+    width: 100%;
+    float: left;
+    position: relative;
+}
+
+/*  Make slider images fluid */
+.slides img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*  Remove floats */
+.slider:before, .slider:after { 
+    display: table; 
+    content: ""; 
+    *zoom: 1; 
+}
+
+/*  Remove floats */
+.slider:after { 
+    clear: both; 
+}
+
+
+
+
+/*=== Stew Styles ===*/
+/*I need to SCSS-a-fy this stuff.*/
+
+header[role="banner"]{
+    width:100%;
+    background:#efefef;
+    padding:25px 0;
+    border-bottom:1px solid #cccccc;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+}
+
+section[role="main"]{
+    margin-top:125px;
+    position:relative;
+    z-index: 0;
+}

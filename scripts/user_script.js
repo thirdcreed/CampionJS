@@ -43,7 +43,6 @@ var CP, campion;
             '>': function () { },
             '<': function (a, b) {
                 
-               
             },
             '=': function(a, b) {
                 
@@ -124,12 +123,20 @@ var CP, campion;
            
             if (this.isFixedPoint(this.variables)) {
 
-               for (var v in this.variables) {
-                  console.log("VAR:",v,"VALUE:",this.variables[v].domain.toString());
-                 
-               }
-                throw new Error("YES!!!!");
-                return true;
+                for (var v in this.variables) {
+                    for (var ii = 0; ii < this.variables[v].domain.size(); ii++) {
+
+                        if (this.variables[v].domain.get(ii) == true) {
+
+                            var $p = $('<p></p>').html("VAR: " + v + "|| VALUE: " + ii);
+                            $('#target').append($p);
+                        }
+                        //console.log("VAR:", v, "VALUE:", this.variables[v].domain.toString());
+                    }
+
+                }
+               throw new Error("Solution");
+                //return true;
             } else {
                 var frame = this.undoStack.length();
                 //console.log("frame:",frame);
@@ -157,7 +164,7 @@ var CP, campion;
                             
                             if (!this.solveOne()) {
                                // console.log("solveOne() failed");
-                               
+                                
                             } //return codes for back jumping
                         }
 
@@ -176,7 +183,7 @@ var CP, campion;
                  }
                  return true;
             }
-
+            //return true;
 
         };
 
@@ -341,7 +348,7 @@ var CP, campion;
                     constraint['OP'] = this.operators[tokens[i]];
                 }
                 if (/[\w_]/.test(tokens[i])) {
-                    console.log("exp[i]", tokens[i]);
+                   //console.log("exp[i]", tokens[i]);
                     if (this.variables[tokens[i]]) {
                         scheme.push(this.variables[tokens[i]]);
                     }
@@ -381,6 +388,15 @@ var CP, campion;
         },
         getMatrix: function(name) {
             return this.matrices[name];
+        },
+        setVar: function(name,dom) {
+            this.variables[name].domain.reset();
+            this.variables[name].domain.set(dom, true);
+            console.log(name);
+            console.log('this.variables[name].domain:', this.variables[name].domain.toString());
+            
+           
+
         },
         
         addMatrix: function(varName,m,n,dom) {
@@ -453,41 +469,42 @@ var m = matrix.length - 1;
 var n = matrix[0].length - 1;
 
 //addMatrixConstriants(matrix,m,n).done(solve());
-Sudoku.addConstraint("board0_3 = 5");
-Sudoku.addConstraint("board0_4 = 9");
-Sudoku.addConstraint("board0_6 = 8");
-Sudoku.addConstraint("board0_8 = 1");
-Sudoku.addConstraint("board1_1 = 4");
-Sudoku.addConstraint("board1_2 = 6");
-Sudoku.addConstraint("board1_4 = 3");
-Sudoku.addConstraint("board1_5 = 7");
-Sudoku.addConstraint("board2_0 = 5");
-Sudoku.addConstraint("board2_4 = 1");
-Sudoku.addConstraint("board2_7 = 7");
-Sudoku.addConstraint("board3_0 = 7");
-Sudoku.addConstraint("board3_2 = 4");
-Sudoku.addConstraint("board3_3 = 1");
-Sudoku.addConstraint("board3_8 = 9");
-Sudoku.addConstraint("board4_0 = 6");
-Sudoku.addConstraint("board4_3 = 9");
-Sudoku.addConstraint("board4_5 = 3");
-Sudoku.addConstraint("board4_8 = 7");
-Sudoku.addConstraint("board5_0 = 2");
-Sudoku.addConstraint("board5_5 = 5");
-Sudoku.addConstraint("board5_6 = 1");
-Sudoku.addConstraint("board5_8 = 6");
-Sudoku.addConstraint("board6_1 = 1");
-Sudoku.addConstraint("board6_4 = 6");
-Sudoku.addConstraint("board6_8 = 4");
-Sudoku.addConstraint("board7_3 = 7");
-Sudoku.addConstraint("board7_4 = 5");
-Sudoku.addConstraint("board7_6 = 9");
-Sudoku.addConstraint("board7_7 = 3");
-Sudoku.addConstraint("board8_0 = 9");
-Sudoku.addConstraint("board8_2 = 5");
-Sudoku.addConstraint("board8_3 = 3");
-Sudoku.addConstraint("board8_4 = 4");
-Sudoku.addConstraint("board8_5 = 8");
+
+Sudoku.setVar("board0_3",  5);
+Sudoku.setVar("board0_4",  9);
+Sudoku.setVar("board0_6",  8);
+Sudoku.setVar("board0_8",  1);
+Sudoku.setVar("board1_1",  4);
+Sudoku.setVar("board1_2",  6);
+Sudoku.setVar("board1_4",  3);
+Sudoku.setVar("board1_5",  7);
+Sudoku.setVar("board2_0",  5);
+Sudoku.setVar("board2_4",  1);
+Sudoku.setVar("board2_7",  7);
+Sudoku.setVar("board3_0",  7);
+Sudoku.setVar("board3_2",  4);
+Sudoku.setVar("board3_3",  1);
+Sudoku.setVar("board3_8",  9);
+Sudoku.setVar("board4_0",  6);
+Sudoku.setVar("board4_3",  9);
+Sudoku.setVar("board4_5",  3);
+Sudoku.setVar("board4_8",  7);
+Sudoku.setVar("board5_0",  2);
+Sudoku.setVar("board5_5",  5);
+Sudoku.setVar("board5_6",  1);
+Sudoku.setVar("board5_8",  6);
+Sudoku.setVar("board6_1",  1);
+Sudoku.setVar("board6_4",  6);
+Sudoku.setVar("board6_8",  4);
+Sudoku.setVar("board7_3",  7);
+Sudoku.setVar("board7_4",  5);
+Sudoku.setVar("board7_6",  9);
+Sudoku.setVar("board7_7",  3);
+Sudoku.setVar("board8_0",  9);
+Sudoku.setVar("board8_2",  5);
+Sudoku.setVar("board8_3",  3);
+Sudoku.setVar("board8_4",  4);
+Sudoku.setVar("board8_5",  8);
 
 //var addMatrixConstriants = function(matrix, m, n) {
     for (var i = 0; i < m; i++) {

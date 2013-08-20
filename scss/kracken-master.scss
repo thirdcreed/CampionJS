@@ -1,0 +1,28 @@
+//=== Core Theme Styles, Mixins & Variables ====//
+@import "libs/_mixins";
+@import "libs/_variables";
+
+//==== Load in Basic Kracken Stuff. In Order ====//
+@import "libs/_reset";
+@import "libs/_grid";
+@import "libs/_typography";
+@import "libs/_buttons";
+@import "libs/_forms";
+//==== No Icons for now ==== //
+@import "libs/_icons";
+@import "libs/_spacing";
+//==== Add Add-Ons Here ====//
+//============================//
+// I'm just going to go ahead //
+// and import the add-ons     //
+// that I know I'll use.      //
+//============================//
+@import "libs/_astro";
+@import "libs/_hero";
+
+
+//==== Print Styles ====// 
+@import "libs/_spacing";
+
+
+

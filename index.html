@@ -1,9 +1,28 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <title></title>
-</head>
-    <script src="scripts/jquery-1.6.4.js"></script>
+    <meta charset="utf-8">
+    <!-- Force latest available IE rendering engine and Chrome Frame (if installed) -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Campion.js</title>
+    <meta name="description" content="">
+    <!-- Mobile Screen Resizing -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- stylesheet -->
+    <link href="scss/kracken-master.min.css" rel="stylesheet" type="text/css" />
+    <!-- HTML5 Shim for IE 6-8 -->
+    <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <![endif]-->
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/ico" href="">
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144.png">
+
+	<script src="scripts/jquery-1.6.4.js"></script>
     <script src="scripts/BitArray.js"></script>
     <script src="scripts/jquery-1.6.4.min.js"></script>
     <script src="scripts/jquery-ui-1.10.2.js"></script>
@@ -11,10 +30,85 @@
     <script src="scripts/underscore.min.js"></script>
     
     <script src="scripts/user_script.js"></script>
-    <link href="style/style.css" rel="stylesheet" />
-    <body>
-        
-        <div id="info"></div>
+    <!-- MS Homescreen Icons // Cool!-->
+    <meta name="msapplication-TileColor" content="#0088cc">
+    <meta name="msapplication-TileImage" content="img/ms-touch-icon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+</head>
+<body>
+    <!-- Old Browser Warning -->
+    <!--[if lt IE 8]>
+            <section class="container">
+                Did you know that your web browser is a bit old? Some of the content on this site might not work right as a result. <a href="http://whatbrowser.org">Upgrade your browser</a> for a faster, better, and safer web experience.
+            </section>
+            <![endif]-->
+    <header role="banner">
+        <div class="container">
+            <div class="row">
+                <div class="grid-6 text-center space-top space-bottom">
+                    <nav class="nav-wrap">
+                        <a class="logo" href="index.html">
+                            <img src="img/campion-logo-400x126.png" alt="Campion.js site Logo"></a>
+                        <ul class="nav space-top">
+                            <li><a href="https://github.com/thirdcreed/CampionJS">GitHub</a></li>
+                            <li><a href="mailto:thirdcreed@gmail.com">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    </body>
+    <!-- ==== Main Content follows ==== -->
+    <article class="container" role="main">
+        
+        <!-- This is the Hero Unit -->
+        <div class="row">
+            <div class="grid-6">
+                <div class="hero">
+                    <h1>What is Campion.js?</h1>
+                    <p>Campion.js is a constraint satisfaction program written entirely in JavaScript!</p>
+                    <p>Campion uses constraint propogation to solve a wide variety of problems from many business and personal domains</p>
+                    <a class="btn btn-large" href="https://github.com/thirdcreed/CampionJS">Download from GitHub!</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content is a simple 1-col lay out with nothing real special.
+            //    
+            // consider building a readme.md file as well.   
+            // each .grid-# needs to be wraped in a .row. Grids add up to 6 instead of 12 like waffles.
+            // if you get lost check out: http://cferdinandi.github.io/kraken/grid.html    
+        ---------------------------------------------------------------->
+        <div class="row">
+            <div class="grid-6">
+                <h2>Constraint Propagation?</h2>
+                <p>Constraint Propagation Problems are nothing more a set of variables, a set of possible values for each variable, and relationships between the variables that constrain the variables.</p>
+                <ul>
+                    <li>Variables - These are your nouns. For example: CathyAge or boardspace0_1, or NumberOfMarblesICanFitInMyMouth</li>
+
+                    <li>Domains - These are the values your values can take. For Example : 50-59, 0-9, or 15-20, each domain belongs to a particular variable</li>
+                    <li>Constraints - These are relationships between your variables, For Example: CathyAge < TomAge if Cathy is younger than Tom </li>
+                </ul>
+                
+                <img src="img/example.png" alt="example" />
+
+                <p>
+                    The constraint solver will get to work.  A value will be picked from the domain of the first variable. 
+                    Then each constraint will propagate to the other variables, and what that choice for the first variable means for the rest of them.
+                    If Tom's age is narrowed down to 55 and campion knows Cathy's Age is less than than toms then campion can narrow Cathy's Domain down from 50-59 to 50-54.
+                </p>
+
+                
+            </div>
+        </div> 
+        <div class="row" >
+            <div class="grid-6" id="target"></div>
+        </div>       
+    </article>
+    <!-- Javascript -->
+    <!-- In the footer for better performance -->
+    <script src="js/libs/slider.js"></script>
+    <script src="js/kraken.js"></script>
+</body>
 </html>
